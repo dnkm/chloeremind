@@ -91,7 +91,9 @@ export default function App() {
           >
             <Stack.Navigator
               initialRouteName={showWelcome ? "login" : "Home"}
-              headerMode={"float"}
+              screenOptions={{
+                headerMode: "float"
+              }}
             >
               <Stack.Screen
                 name="Welcome"

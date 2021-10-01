@@ -8,11 +8,13 @@ const firebaseConfig = {
   projectId: "new-3361d",
   storageBucket: "new-3361d.appspot.com",
   messagingSenderId: "420861725551",
-  appId: "1:420861725551:web:81f0659f9b585e9c34b69a"
+  appId: "1:420861725551:web:81f0659f9b585e9c34b69a",
+  databaseURL: 'https://new-3361d.firebaseio.com'
 };
 
 if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig)
 }
+firebase.firestore().settings({ experimentalForceLongPolling: true });
 
 export { firebase };
