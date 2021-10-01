@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "chloe-remind",
+    "slug": "chloe-remind",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "chloe-remind"
+}
