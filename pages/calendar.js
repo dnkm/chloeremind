@@ -1,9 +1,9 @@
-import React from 'react';
-import moment from 'moment';
-import { useState, useEffect } from 'react';
-import { Surface, Text, Button } from 'react-native-paper';
-import tw from 'tailwind-react-native-classnames';
-import Constants from 'expo-constants';
+import React from "react";
+import moment from "moment";
+import { useState, useEffect } from "react";
+import { Surface, Text, Button } from "react-native-paper";
+import tw from "tailwind-react-native-classnames";
+import Constants from "expo-constants";
 import {
   SafeAreaView,
   StyleSheet,
@@ -12,7 +12,7 @@ import {
   ScrollView,
   Keyboard,
   TouchableOpacity,
-} from 'react-native';
+} from "react-native";
 import {
   addMonths,
   addDays,
@@ -24,12 +24,12 @@ import {
   getMonth,
   getYear,
   format,
-} from 'date-fns';
-import { fapp } from '../utils/fb';
-import { firebase } from '../utils/fb';
-import { decode } from 'html-entities';
-import { useContext } from 'react';
-import AppContext from '../utils/app-context';
+} from "date-fns";
+import { fapp } from "../utils/fb";
+import { firebase } from "../utils/fb";
+import { decode } from "html-entities";
+import { useContext } from "react";
+import AppContext from "../utils/app-context";
 
 export default function Calendar() {
   const [calendar, setCalendar] = useState([]);
@@ -37,42 +37,42 @@ export default function Calendar() {
   const [date, setDate] = useState(null);
 
   let { user, userData } = useContext(AppContext);
-  let [txt, setTxt] = React.useState('');
+  let [txt, setTxt] = React.useState("");
   let [reminderData, setReminderData] = React.useState([]);
-  const reminderRef = firebase.firestore().collection('reminder');
+  const reminderRef = firebase.firestore().collection("reminder");
 
-  var daysOfWeek = ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat'];
+  var daysOfWeek = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"];
 
-  const startDay = value.clone().startOf('month').startOf('week');
-  const endDay = value.clone().endOf('month').endOf('week');
+  const startDay = value.clone().startOf("month").startOf("week");
+  const endDay = value.clone().endOf("month").endOf("week");
 
   useEffect(() => {
-    const day = startDay.clone().subtract(1, 'day');
+    const day = startDay.clone().subtract(1, "day");
     const a = [];
-    while (day.isBefore(endDay, 'day')) {
+    while (day.isBefore(endDay, "day")) {
       a.push(
         Array(7)
           .fill(0)
-          .map(() => day.add(1, 'day').clone())
+          .map(() => day.add(1, "day").clone())
       );
     }
     setCalendar(a);
   }, [value]);
 
   function currMonthName() {
-    return value.format('MMM');
+    return value.format("MMM");
   }
 
   function currYear() {
-    return value.format('YYYY');
+    return value.format("YYYY");
   }
 
   function prevMonth() {
-    return value.clone().subtract(1, 'month');
+    return value.clone().subtract(1, "month");
   }
 
   function nextMonth() {
-    return value.clone().add(1, 'month');
+    return value.clone().add(1, "month");
   }
   useEffect(() => {
     const timestamp = new Date();
@@ -85,10 +85,10 @@ export default function Calendar() {
     tomorrow.setDate(tomorrow.getDate() + 1);
 
     reminderRef
-      .where('patientId', '==', userData.puid)
-      .where('date', '>=', timestamp)
-      .where('date', '<=', tomorrow)
-      .orderBy('date', 'desc')
+      .where("patientId", "==", userData.puid)
+      .where("date", ">=", timestamp)
+      .where("date", "<=", tomorrow)
+      .orderBy("date", "desc")
       .onSnapshot(
         (querySnapshot) => {
           console.log(querySnapshot);
@@ -122,7 +122,7 @@ export default function Calendar() {
     const reminderAdd = reminderRef.add(newReminderData);
     reminderAdd
       .then((_doc) => {
-        setTxt('');
+        setTxt("");
         Keyboard.dismiss();
       })
       .catch((error) => {
@@ -132,7 +132,7 @@ export default function Calendar() {
       ...reminderData,
       { reminderId: reminderAdd.id, reminderTxt: txt, completed: false },
     ]);
-    setTxt('');
+    setTxt("");
   }
 
   function onComplete(index) {
@@ -153,10 +153,10 @@ export default function Calendar() {
     tomorrow.setDate(tomorrow.getDate() + 1);
 
     reminderRef
-      .where('patientId', '==', user.uid)
-      .where('date', '>=', day.toDate())
-      .where('date', '<=', tomorrow)
-      .orderBy('date', 'desc')
+      .where("patientId", "==", user.uid)
+      .where("date", ">=", day.toDate())
+      .where("date", "<=", tomorrow)
+      .orderBy("date", "desc")
       .onSnapshot(
         (querySnapshot) => {
           console.log(querySnapshot);
@@ -178,42 +178,47 @@ export default function Calendar() {
   }
   function dateToText(date) {
     if (!date) {
-      return '';
+      return "";
     }
-    return format(date, 'MMMM do, yyyy');
+    return format(date, "MMMM do, yyyy");
   }
 
   return (
     <>
-      <View style={{ ...tw`flex-1`, backgroundColor: '#f3f9f8' }}>
+      <View style={{ ...tw`flex-1`, backgroundColor: "#f3f9f8" }}>
         <View style={tw`flex-row justify-center items-center`}>
-          <Text style={{
+          <Text
+            style={{
               ...tw`text-gray-500`,
               fontSize: 30,
               margin: 10,
-              backgroundColor: '#f3f9f8',
+              backgroundColor: "#f3f9f8",
             }}
-             onPress={() => setValue(prevMonth())}>
-            {decode('&lt;')}
+            onPress={() => setValue(prevMonth())}
+          >
+            {decode("&lt;")}
           </Text>
 
           <Text
             style={{
               ...tw`text-gray-600`,
               fontSize: 20,
-              backgroundColor: '#f3f9f8',
-            }}>
-            {date && format(date, 'MMMM')}
+              backgroundColor: "#f3f9f8",
+            }}
+          >
+            {date && format(date, "MMMM")}
           </Text>
 
-          <Text style={{
+          <Text
+            style={{
               ...tw`text-gray-500`,
               fontSize: 30,
               margin: 10,
-              backgroundColor: '#f3f9f8',
+              backgroundColor: "#f3f9f8",
             }}
-             onPress={() => setValue(nextMonth())}>
-            {decode('&gt;')}
+            onPress={() => setValue(nextMonth())}
+          >
+            {decode("&gt;")}
           </Text>
         </View>
 
@@ -227,26 +232,28 @@ export default function Calendar() {
 
         <View style={tw`flex-wrap bg-yellow-400 `}>
           {calendar.map((week) => (
-            <View style={cellStyle}>
+            <View style={cellStyle} key={week}>
               {week.map((day) => (
                 <TouchableOpacity
                   style={{
                     borderRadius: 15,
                     ...styles.dayCell,
                     backgroundColor: moment(day).isSame(date)
-                      ? 'white'
-                      : '#f3f9f8',
-                    
+                      ? "white"
+                      : "#f3f9f8",
                   }}
-                  onPress={() => onDayClick(day)}>
+                  onPress={() => onDayClick(day)}
+                  key={day}
+                >
                   <Text
                     style={{
                       color:
                         moment(day).month() === value.month()
-                          ? 'black'
-                          : '#DCDFE5',
-                    }}>
-                    {moment(day).format('D').toString()}
+                          ? "black"
+                          : "#DCDFE5",
+                    }}
+                  >
+                    {moment(day).format("D").toString()}
                   </Text>
                 </TouchableOpacity>
               ))}
@@ -255,7 +262,7 @@ export default function Calendar() {
         </View>
 
         <Text style={styles.remindersOn}>Reminders on {dateToText(date)}</Text>
-        <View style={{ flexDirection: 'row' }}>
+        <View style={{ flexDirection: "row" }}>
           <TextInput
             defaultValue={txt}
             onChangeText={setTxt}
@@ -270,13 +277,16 @@ export default function Calendar() {
           {reminderData.map((v, i) => (
             <TouchableOpacity
               onPress={() => onComplete(i)}
-              style={styles.reminderButton}>
+              style={styles.reminderButton}
+              key={i}
+            >
               <Text
                 style={
                   v.completed
                     ? styles.completedReminder
                     : styles.defaultReminder
-                }>
+                }
+              >
                 {v.reminderTxt}
               </Text>
             </TouchableOpacity>
@@ -311,8 +321,8 @@ export default function Calendar() {
 const cellStyle = {
   ...tw` flex-row`,
   margin: 0,
-  backgroundColor: '#f3f9f8',
-  color: '#8b9592',
+  backgroundColor: "#f3f9f8",
+  color: "#8b9592",
 };
 const styles = StyleSheet.create({
   dayCell: {
@@ -320,60 +330,60 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 50,
     ...tw`justify-center items-center p-4`,
-    backgroundColor: '#f3f9f8',
+    backgroundColor: "#f3f9f8",
   },
   weekCell: {
     width: 0,
     flex: 1,
     height: 50,
     ...tw` justify-center items-center`,
-    backgroundColor: '#f3f9f8',
+    backgroundColor: "#f3f9f8",
   },
   completedReminder: {
-    color: 'lightgray',
-    fontStyle: 'italic',
+    color: "lightgray",
+    fontStyle: "italic",
     flex: 1,
     fontSize: 18,
   },
   defaultReminder: {
     flex: 1,
-    color: 'blue',
+    color: "blue",
     fontSize: 18,
   },
   reminderButton: {
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     padding: 7,
   },
   textInput: {
     flex: 1,
     borderBottomWidth: 1,
-    backgroundColor: '#ECF0EF',
+    backgroundColor: "#ECF0EF",
     height: 40,
     borderRadius: 10,
-    padding:10,
-    marginLeft:10 ,
+    padding: 10,
+    marginLeft: 10,
     marginBottom: 10,
   },
   container: {
     padding: 5,
     margin: 2,
-    marginBottom:20,
-    backgroundColor: '#f3f9f8',
+    marginBottom: 20,
+    backgroundColor: "#f3f9f8",
   },
   remindersOn: {
-    backgroundColor: '#f3f9f8',
+    backgroundColor: "#f3f9f8",
     fontSize: 20,
     padding: 10,
   },
   add: {
-    backgroundColor: '#16C79A',
-    color: 'white',
+    backgroundColor: "#16C79A",
+    color: "white",
     borderRadius: 10,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     padding: 5,
     fontSize: 16,
   },
