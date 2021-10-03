@@ -15,5 +15,6 @@
       "versionCode": 1
     }
   },
-  "name": "Remind Me"
+  "name": "Remind Me",
+  "permission": []
 }
