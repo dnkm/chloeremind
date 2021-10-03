@@ -34,13 +34,13 @@ export default function FamilySetup({ navigation }) {
     }
 
     const puid = docs[0].data().puid;
-    console.log('puid', puid);
+    // console.log('puid', puid);
 
     await firebase.firestore().collection('invites').doc(docs[0].id).update({
       status: 'DONE',
     });
 
-    console.log(2);
+    // console.log(2);
     firebase
       .auth()
       .createUserWithEmailAndPassword(email, pw)

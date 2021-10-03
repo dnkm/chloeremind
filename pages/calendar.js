@@ -91,7 +91,7 @@ export default function Calendar() {
       .orderBy("date", "desc")
       .onSnapshot(
         (querySnapshot) => {
-          console.log(querySnapshot);
+          // console.log(querySnapshot);
           const newEntities = [];
           querySnapshot.forEach((doc) => {
             const entity = {

@@ -1,11 +1,19 @@
 {
   "expo": {
-    "name": "chloe-remind",
-    "slug": "chloe-remind",
+    "name": "Remind Me",
+    "slug": "remindme-app-android-chloe",
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"
-    ]
+    ],
+    "ios": {
+      "bundleIdentifier": "com.chloelim.remindme",
+      "buildNumber": "1.0.0"
+    },
+    "android": {
+      "package": "com.chloelim.remindme",
+      "versionCode": 1
+    }
   },
-  "name": "chloe-remind"
+  "name": "Remind Me"
 }

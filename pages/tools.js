@@ -21,7 +21,7 @@ export default function Tools() {
     if (userData) setHospital(userData.hospital);
   }, [userData]);
 
-  console.log(userData, userData.hospital);
+  // console.log(userData, userData.hospital);
 
   const storeData = async ({ hospital }) => {
     try {

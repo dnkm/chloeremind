@@ -50,12 +50,12 @@ export default function App() {
   useEffect(() => {
     AsyncStorage.getItem("@seenWelcome").then((v) => {
       if (v === "true") {
-        console.log("yup");
-        // setLoading(false);
+        // console.log("yup");
+        setLoading(false);
         setShowWelcome(false);
       } else {
-        console.log("nope");
-        // setLoading(false);
+        // console.log("nope");
+        setLoading(false);
         setShowWelcome(true);
       }
     });

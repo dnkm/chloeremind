@@ -8,14 +8,14 @@ import { firebase } from '../utils/fb';
 export default function Welcome({ navigation }) {
   const { user, setUser, setUserData } = useContext(AppContext);
 
-  let [email, setEmail] = useState('mike@test.com');
-  let [pw, setPw] = useState('123123');
+  let [email, setEmail] = useState(''); // mike@test.com
+  let [pw, setPw] = useState(''); // 123123
 
   let [errMsg, setErrMsg] = useState(undefined);
 
   function login() {
     setErrMsg(undefined);
-    console.log('test');
+    // console.log('test');
 
     firebase
       .auth()
@@ -34,7 +34,7 @@ export default function Welcome({ navigation }) {
               return;
             }
             const userData = firestoreDocument.data();
-            console.log('test');
+            // console.log('test');
 
             setUser(user);
             setUserData(userData);

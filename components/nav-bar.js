@@ -17,7 +17,7 @@ export default function NavBar() {
       <Appbar.Action
         icon="Home"
         onPress={() => {
-          console.log("link")
+          // console.log("link")
           /*navigation.navigate("Home")*/
         }}
       />
